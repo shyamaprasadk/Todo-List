@@ -1,6 +1,36 @@
+import { useState } from "react";
 import "./App.css";
 
 const App = () => {
+  const [todo, setTodo] = useState("");
+  const [list, setList] = useState([]);
+  const weekday = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const getDay = new Date().getDay();
+  const day = weekday[getDay];
+
+  const handleAdd = () => {
+    if (todo !== "") {
+      setList([...list, todo]);
+      setTodo("");
+    }
+  };
+
+  const handleClose = () => {};
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleAdd();
+    }
+  };
+
   return (
     <div className="app">
       <div className="mainHeading">
@@ -8,23 +38,35 @@ const App = () => {
       </div>
       <div className="subHeading">
         <br />
-        <h2>Whoop, it's Wednesday 🌝 ☕ </h2>
+        <h2>Whoop, it's {day} ☕ </h2>
       </div>
       <div className="input">
-        <input type="text" placeholder="🖊️ Add item..." />
-        <i className="fas fa-plus"></i>
+        <input
+          type="text"
+          onChange={(e) => setTodo(e.target.value)}
+          onKeyDown={handleKeyDown}
+          value={todo}
+          placeholder="🖊️ Add item..."
+        />
+        <i className="fas fa-plus" onClick={handleAdd}></i>
       </div>
-      <div className="todos">
-        <div className="todo">
-          <div className="left">
-            <input type="checkbox" name="" id="" />
-            <p>Rect tutorial</p>
-          </div>
-          <div className="right">
-            <i className="fas fa-times"></i>
-          </div>
-        </div>
-      </div>
+      {list
+        .map((item, index) => {
+          return (
+            <div className="todos" key={index}>
+              <div className="todo">
+                <div className="left">
+                  <input type="checkbox" name="" id="checkbox" />
+                  <p>{item}</p>
+                </div>
+                <div className="right">
+                  <i onClick={handleClose} className="fas fa-times"></i>
+                </div>
+              </div>
+            </div>
+          );
+        })
+        .reverse()}
     </div>
   );
 };

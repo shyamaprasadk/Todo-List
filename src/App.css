@@ -8,10 +8,9 @@ body {
 }
 
 .app {
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translate(-50%, -10%);
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .app .mainHeading h1 {
