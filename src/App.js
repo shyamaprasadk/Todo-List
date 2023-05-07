@@ -36,6 +36,19 @@ const App = () => {
     setList(updatedList);
   };
 
+  const handleChecked = ({ e, item }) => {
+    console.log("vvvvv", e.target.checked);
+    console.log(item);
+    setList(
+      list.filter((checkedList) => {
+        if (checkedList.id === item.id) {
+          checkedList.status = JSON.parse(e.target.checked);
+        }
+        return checkedList;
+      })
+    );
+  };
+
   return (
     <div className="app">
       <div className="mainHeading">
@@ -61,7 +74,13 @@ const App = () => {
             <div className="todos" key={index}>
               <div className="todo">
                 <div className="left">
-                  <input type="checkbox" name="" id="checkbox" />
+                  <input
+                    onChange={(e) => handleChecked({ e, item })}
+                    value={item.status}
+                    type="checkbox"
+                    name=""
+                    id="checkbox"
+                  />
                   <p>{item.text}</p>
                 </div>
                 <div className="right">
