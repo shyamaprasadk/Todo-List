@@ -4,6 +4,8 @@ import "./App.css";
 const App = () => {
   const [todo, setTodo] = useState("");
   const [list, setList] = useState([]);
+  const id = Date.now();
+
   const weekday = [
     "Sunday",
     "Monday",
@@ -18,17 +20,20 @@ const App = () => {
 
   const handleAdd = () => {
     if (todo !== "") {
-      setList([...list, todo]);
+      setList([...list, { id: id, text: todo, status: false }]);
       setTodo("");
     }
   };
-
-  const handleClose = () => {};
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       handleAdd();
     }
+  };
+
+  const handleClose = (id) => {
+    const updatedList = list.filter((item) => item.id !== id);
+    setList(updatedList);
   };
 
   return (
@@ -57,10 +62,13 @@ const App = () => {
               <div className="todo">
                 <div className="left">
                   <input type="checkbox" name="" id="checkbox" />
-                  <p>{item}</p>
+                  <p>{item.text}</p>
                 </div>
                 <div className="right">
-                  <i onClick={handleClose} className="fas fa-times"></i>
+                  <i
+                    onClick={() => handleClose(item.id)}
+                    className="fas fa-times"
+                  ></i>
                 </div>
               </div>
             </div>
